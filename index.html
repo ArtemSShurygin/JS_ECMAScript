@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="class1 targetClass">
+			<div class="class1.1">
+				<div class="class1.1.1"></div>
+			</div>
+		</div>
+		<div class="class2">
+			<div class="class2.1">
+				<div class="class2.1.1">
+					<div class="class2.1.1.1"></div>
+					<div class="class2.1.1.2 targetClass2"></div>
+					<div class="class2.1.1.3 targetClass2"></div>
+				</div>
+				<div class="class2.1.2 targetClass2">
+					<div class="class2.1.2.1"></div>
+					<div class="class2.1.2.2 targetClass3"></div>
+					<div class="class2.1.2.3"></div>
+				</div>
+				<div class="class2.1.3 targetClass2">
+					<div class="class2.1.3.1"></div>
+					<div class="class2.1.3.2"></div>
+					<div class="class2.1.3.3"></div>
+				</div>
+			</div>
+		</div>
+		<script>
+			// 1) Дан массив const arr = [1, 5, 7, 9] с помощью Math.min и spread оператора, найти минимальное число в массиве, решение задание должно состоять из одной строки
+			let arr = [1, 5, 7, 9];
+			console.log("1. Минимальное число в массиве:", Math.min(...arr));
+
+			// 2) Напишите функцию createCounter, которая создает счетчик и возвращает объект с двумя методами: increment и decrement. Метод increment должен увеличивать значение счетчика на 1, а метод decrement должен уменьшать значение счетчика на 1. Значение счетчика должно быть доступно только через методы объекта, а не напрямую.
+			const createCalculator = (initialValue) => {
+				let value = initialValue;
+				return {
+					increment(num) {
+						value += num;
+					},
+					decrement(num) {
+						value -= num;
+					},
+					getValue() {
+						return value;
+					},
+				};
+			};
+
+			const calculator = createCalculator(10);
+			calculator.increment(10);
+			calculator.decrement(5);
+			console.log("2. ", calculator.getValue());
+
+			// 3) Напишите рекурсивную функцию findElementByClass, которая принимает корневой элемент дерева DOM и название класса в качестве аргументов и возвращает первый найденный элемент с указанным классом в этом дереве.
+
+			function findElementByClass(rootElementByClass, findClass) {
+				let numOfEl = 1;
+				let countEl = 0;
+				let findedEl = "";
+				const chld = document.querySelector(`.${rootElementByClass}`);
+				// console.log(chld);
+				loop(chld);
+				return findedEl;
+
+				function loop(node) {
+					let nodes = node.children;
+					for (var i = 0; i < nodes.length; i++) {
+						if (nodes[i].classList.contains(findClass) && countEl !== numOfEl) {
+							// console.log("Попался", nodes[i]);
+							countEl++;
+							if (countEl === numOfEl) {
+								findedEl = nodes[i];
+							}
+						}
+						if (nodes[i].children.length > 0 && countEl !== numOfEl) {
+							// console.log(nodes[i]);
+							loop(nodes[i]);
+						}
+					}
+				}
+			}
+
+			console.log("3.", findElementByClass("class2", "targetClass3"));
+
+			// !!!!!!!!!!!!!!!!!!!!!!!!
+			//  return ничего не возаращает, console.log("Попался", nodes[i]) работет
+			// chld = document.querySelector(".class2");
+			// function loop(node) {
+			// 	let nodes = node.children;
+			// 	for (var i = 0; i < nodes.length; i++) {
+			//     		if (nodes[i].classList.contains("targetClass3")) {
+			// 				console.log("Попался", nodes[i]);
+			//         return nodes[i];
+			// 			}
+			// 		if (nodes[i].children.length > 0) {
+			// 			// console.log(nodes[i]);
+			//       // console.log(nodes[i].classList);
+			// 			// if (nodes[i].classList.contains("targetClass3")) {
+			// 			// 	console.log("Попался", nodes[i]);
+			// 			// 	return nodes[i];
+			// 			// }
+			// 			loop(nodes[i]);
+			// 		}
+			// 	}
+			// }
+			// // loop(chld);
+			// console.log(loop(chld));
+		</script>
+	</body>
+</html>
